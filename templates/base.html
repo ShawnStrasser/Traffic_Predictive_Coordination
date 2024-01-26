@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Traffic Predictive Coordination</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+    <!--meta http-equiv="refresh" content="30"-->
+
+    <script>
+        function refreshAtIntervals(minutes, extraDelaySeconds) {
+            var now = new Date();
+            var delay = minutes * 60 * 1000; // Convert minutes to milliseconds
+            var extraDelay = extraDelaySeconds * 1000; // Convert extra delay seconds to milliseconds
+            var start = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), now.getMinutes());
+    
+            start.setMinutes(start.getMinutes() + minutes - start.getMinutes() % minutes);
+            setTimeout(function() {
+                window.location.reload();
+            }, start.getTime() - now.getTime() + extraDelay);
+        }
+    
+        // Refresh the page at the next 5-minute interval with an extra 10 seconds delay
+        refreshAtIntervals({{refresh_interval}}, 10);
+    </script>
+    
+    
+</head>
+<body>
+    <div class="navbar">
+        <a href="/"><img src="{{ url_for('static', filename='configure.svg') }}" alt="Configure"> Configure</a>
+        <a href="/reports"><img src="{{ url_for('static', filename='reports.svg') }}" alt="Reports"> Reports</a>
+        <a href="/logs"><img src="{{ url_for('static', filename='logs.svg') }}" alt="Logs"> Logs</a>
+    </div>
+    
+
+    <div class="main-content">
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+</html>

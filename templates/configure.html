@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<body>
+    <div class="container">
+        <h1>Traffic Signal Coord Pattern Control: OR34 in Corvallis</h1>
+        
+        <div class="section">
+            <h2>Run Status: {{ job_status }}</h2>
+            <p>Click to turn this app on or off.</p>
+            <button onclick="fetch('/toggle').then(response => response.text()).then(html => document.body.innerHTML = html)">
+                Turn {{ change_job_status }}
+            </button>
+        </div>
+
+        <div class="section">
+            <h2>Current Mode: {{ mode }}</h2>
+            <p>Choose from Traffic Responsive (actual volume/occupancy) or Traffic Predictive (next-step prediction).</p>
+            <button onclick="fetch('/toggle_mode').then(response => response.text()).then(html => document.body.innerHTML = html)">
+                Change Mode
+            </button>
+        </div>
+
+        <div class="section">
+            <h2>Diagnostic Mode: {{ diagnostic_status }}</h2>
+            <p>In diagnostic mode, app will continue to collect logs and select coord patterns, but the pattern will not be sent to the controller.</p>
+            <button onclick="fetch('/toggle_diagnostic').then(response => response.text()).then(html => document.body.innerHTML = html)">
+                Toggle Diagnostic Mode
+            </button>
+        </div>
+    </div>
+</body>
+
+
+{% endblock %}
