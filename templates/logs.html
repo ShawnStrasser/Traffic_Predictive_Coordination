@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .logs-table {
+        width: 50%;
+        border-collapse: separate;
+        border-spacing: 10px 5px; /* Adjust cell spacing */
+        font-size: 16px; /* Adjust font size */
+    }
+    .logs-table th, .logs-table td {
+        padding: 10px; /* Adjust cell padding */
+    }
+</style>
+
+<body>
+    <h1>Logs</h1>
+    <form action="/logs" method="get">
+        <label for="event">Filter by Event:</label>
+        <select name="event" id="event">
+            <option value="">All Events</option>
+            {% for event in event_types %}
+            <option value="{{ event }}" {% if event == current_filter %}selected{% endif %}>{{ event }}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="Filter">
+    </form>
+
+    {{ logs_html | safe }}
+</body>
+{% endblock %}
